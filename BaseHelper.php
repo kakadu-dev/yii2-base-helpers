@@ -857,4 +857,16 @@ class BaseHelper
 
         return $endTime->getTimestamp() - $reference->getTimestamp();
     }
+
+    /**
+     * Get dsn db driver
+     *
+     * @param string $dsn
+     *
+     * @return string
+     */
+    public static function getDBDriver(string $dsn): string
+    {
+        return explode(':', $dsn)[0] ?? '';
+    }
 }
