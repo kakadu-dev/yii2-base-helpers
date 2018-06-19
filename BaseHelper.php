@@ -869,4 +869,26 @@ class BaseHelper
     {
         return explode(':', $dsn)[0] ?? '';
     }
+
+    /**
+     * Delete files in dir and dir
+     *
+     * @param $target
+     *
+     * @return void
+     */
+    public static function deleteFiles($target)
+    {
+        if (is_dir($target)) {
+            $files = glob($target . '*', GLOB_MARK);
+
+            foreach ($files as $file) {
+                self::deleteFiles($file);
+            }
+
+            rmdir($target);
+        } elseif (is_file($target)) {
+            unlink($target);
+        }
+    }
 }
