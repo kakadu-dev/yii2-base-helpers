@@ -891,4 +891,22 @@ class BaseHelper
             unlink($target);
         }
     }
+
+    /**
+     * Render file
+     *
+     * @param array $params
+     *
+     * @return string
+     */
+    public static function renderFile(string $path, array $params = []): string
+    {
+        $path = stripos($path, '.php') === false ? ($path . '.php') : $path;
+
+        extract($params);
+        ob_start();
+        include Yii::getAlias($path);
+
+        return ob_get_clean();
+    }
 }
