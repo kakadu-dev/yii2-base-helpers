@@ -284,17 +284,19 @@ class BaseHelper
     /**
      * Transliterate string
      *
-     * @param string $string
-     * @param bool   $replace_symbols
+     * @param string      $string
+     * @param bool        $replace_symbols
+     * @param string      $workDelimiter
+     * @param string|null $allowSymbols
      *
      * @return string
      */
-    public static function transliterate(string $string, $replace_symbols = true): string
+    public static function transliterate(string $string, $replace_symbols = true, string $workDelimiter = '-', string $allowSymbols = NULL): string
     {
         if ($replace_symbols) {
             $string = static::clearString($string, ' ', true);
-            $string = preg_replace('/\s+/', '-', $string);
-            $string = preg_replace('/[^0-9a-zа-яёЁ-]/ui', '', $string);
+            $string = preg_replace('/\s+/', $workDelimiter, $string);
+            $string = preg_replace('/[^0-9a-zа-яёЁ\-' . preg_quote($allowSymbols, '/') . ']/ui', '', $string);
         }
 
         $rus = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', ' '];
