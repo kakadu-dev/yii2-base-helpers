@@ -93,11 +93,7 @@ class BaseHelper
      */
     public static function getRole($role_id)
     {
-        if (empty(self::$_array_roles)) {
-            self::getArrayRoles();
-        }
-
-        return isset(self::$_array_roles[$role_id]) ? self::$_array_roles[$role_id] : false;
+        return self::getArrayRoles()[$role_id] ?? false;
     }
 
     /**
