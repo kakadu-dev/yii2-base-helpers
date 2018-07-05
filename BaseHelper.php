@@ -476,6 +476,20 @@ class BaseHelper
     }
 
     /**
+     * Return day numer (1,2,3..) by day code from self::getDaysWeek() method
+     *
+     * @param string $dayAlias
+     *
+     * @return int|null
+     */
+    public static function getDayNumberByAlias(string $dayAlias): ?int
+    {
+        $day = array_flip(array_keys(static::getDaysWeek()))[$dayAlias] ?? NULL;
+
+        return $day !== NULL ? $day + 1 : NULL;
+    }
+
+    /**
      * Get random array
      *
      * @param int $min
