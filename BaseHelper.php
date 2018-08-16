@@ -909,4 +909,34 @@ class BaseHelper
 
         return ob_get_clean();
     }
+
+    /**
+     * Get csv file content chunked
+     *
+     * @param string   $file
+     * @param \Closure $callback
+     * @param string   $delimeter
+     * @param int      $stringSize
+     *
+     * @return bool
+     */
+    public static function filecsv_get_contents_chunked(string $file, \Closure $callback, string $delimeter = ',', int $stringSize = 0): bool
+    {
+        try {
+            if (($handle = fopen($file, "r")) !== false) {
+                while (($data = fgetcsv($handle, $stringSize, $delimeter)) !== false) {
+                    call_user_func_array($callback, [$data]);
+                }
+            } else {
+                return false;
+            }
+
+        } catch (\Exception $e) {
+            trigger_error("file_get_contents_chunked::" . $e->getMessage(), E_USER_NOTICE);
+
+            return false;
+        }
+
+        return true;
+    }
 }
